@@ -29,15 +29,15 @@ def impact_cal(data={}):
         'currentlyInfected': data['reportedCases'] * 10,
         'infectionsByRequestedTime': impact['currentlyInfected'] * infectionsCalcution(data['periodType'],
                                                                                        data['timeToElapse']),
-        'severeCasesByRequestedTime': math.ceil(0.15 * impact['infectionsByRequestedTime'])
+        'severeCasesByRequestedTime': math.floor(0.15 * impact['infectionsByRequestedTime'])
     }
 
     impact = {
         'currentlyInfected': data['reportedCases'] * 10,
         'infectionsByRequestedTime': impact['currentlyInfected'] * infectionsCalcution(data['periodType'],
                                                                                        data['timeToElapse']),
-        'severeCasesByRequestedTime': math.ceil(0.15 * impact['infectionsByRequestedTime']),
-        'hospitalBedsByRequestedTime': math.trunc(0.35 * data['totalHospitalBeds']) - impact['severeCasesByRequestedTime']
+        'severeCasesByRequestedTime': math.floor(0.15 * impact['infectionsByRequestedTime']),
+        'hospitalBedsByRequestedTime': math.trunc(0.35 * data['totalHospitalBeds'] - impact['severeCasesByRequestedTime'])
     }
 
     return impact
@@ -57,15 +57,15 @@ def severeImpact_cal(data={}):
         'currentlyInfected': data['reportedCases'] * 50,
         'infectionsByRequestedTime': severeImpact['currentlyInfected'] * infectionsCalcution(data['periodType'],
                                                                                              data['timeToElapse']),
-        'severeCasesByRequestedTime': math.ceil(0.15 * severeImpact['infectionsByRequestedTime'])
+        'severeCasesByRequestedTime': math.floor(0.15 * severeImpact['infectionsByRequestedTime'])
     }
 
     severeImpact = {
         'currentlyInfected': data['reportedCases'] * 50,
         'infectionsByRequestedTime': severeImpact['currentlyInfected'] * infectionsCalcution(data['periodType'],
                                                                                              data['timeToElapse']),
-        'severeCasesByRequestedTime': math.ceil(0.15 * severeImpact['infectionsByRequestedTime']),
-        'hospitalBedsByRequestedTime': math.trunc(0.35 * data['totalHospitalBeds']) - severeImpact['severeCasesByRequestedTime']
+        'severeCasesByRequestedTime': math.floor(0.15 * severeImpact['infectionsByRequestedTime']),
+        'hospitalBedsByRequestedTime': math.trunc(0.35 * data['totalHospitalBeds'] - severeImpact['severeCasesByRequestedTime'])
     }
 
     return severeImpact
