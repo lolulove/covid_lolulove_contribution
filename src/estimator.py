@@ -23,6 +23,21 @@ def impact_cal(data={}):
         'infectionsByRequestedTime': impact['currentlyInfected'] * infectionsCalcution(data['periodType'],
                                                                                        data['timeToElapse'])}
 
+    impact = {
+        'currentlyInfected': data['reportedCases'] * 10,
+        'infectionsByRequestedTime': impact['currentlyInfected'] * infectionsCalcution(data['periodType'],
+                                                                                       data['timeToElapse']),
+        'severeCasesByRequestedTime': int(0.15 * impact['infectionsByRequestedTime'])
+    }
+
+    impact = {
+        'currentlyInfected': data['reportedCases'] * 10,
+        'infectionsByRequestedTime': impact['currentlyInfected'] * infectionsCalcution(data['periodType'],
+                                                                                       data['timeToElapse']),
+        'severeCasesByRequestedTime': int(0.15 * impact['infectionsByRequestedTime']),
+        'hospitalBedsByRequestedTime': int(0.35 * data['totalHospitalBeds']) - impact['severeCasesByRequestedTime']
+    }
+
     return impact
 
 
@@ -35,6 +50,22 @@ def severeImpact_cal(data={}):
         'currentlyInfected': data['reportedCases'] * 50,
         'infectionsByRequestedTime': severeImpact['currentlyInfected'] * infectionsCalcution(data['periodType'],
                                                                                              data['timeToElapse'])}
+
+    severeImpact = {
+        'currentlyInfected': data['reportedCases'] * 50,
+        'infectionsByRequestedTime': severeImpact['currentlyInfected'] * infectionsCalcution(data['periodType'],
+                                                                                             data['timeToElapse']),
+        'severeCasesByRequestedTime': int(0.15 * severeImpact['infectionsByRequestedTime'])
+    }
+
+    severeImpact = {
+        'currentlyInfected': data['reportedCases'] * 50,
+        'infectionsByRequestedTime': severeImpact['currentlyInfected'] * infectionsCalcution(data['periodType'],
+                                                                                             data['timeToElapse']),
+        'severeCasesByRequestedTime': int(0.15 * severeImpact['infectionsByRequestedTime']),
+        'hospitalBedsByRequestedTime': int(0.35 * data['totalHospitalBeds']) - severeImpact['severeCasesByRequestedTime']
+    }
+
     return severeImpact
 
 
