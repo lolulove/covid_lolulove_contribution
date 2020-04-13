@@ -37,7 +37,7 @@ def impact_cal(data={}):
         'infectionsByRequestedTime': impact['currentlyInfected'] * infectionsCalcution(data['periodType'],
                                                                                        data['timeToElapse']),
         'severeCasesByRequestedTime': math.ceil(0.15 * impact['infectionsByRequestedTime']),
-        'hospitalBedsByRequestedTime': math.ceil(0.35 * data['totalHospitalBeds']) - impact['severeCasesByRequestedTime']
+        'hospitalBedsByRequestedTime': math.trunc(0.35 * data['totalHospitalBeds']) - impact['severeCasesByRequestedTime']
     }
 
     return impact
@@ -65,7 +65,7 @@ def severeImpact_cal(data={}):
         'infectionsByRequestedTime': severeImpact['currentlyInfected'] * infectionsCalcution(data['periodType'],
                                                                                              data['timeToElapse']),
         'severeCasesByRequestedTime': math.ceil(0.15 * severeImpact['infectionsByRequestedTime']),
-        'hospitalBedsByRequestedTime': math.ceil(0.35 * data['totalHospitalBeds']) - severeImpact['severeCasesByRequestedTime']
+        'hospitalBedsByRequestedTime': math.trunc(0.35 * data['totalHospitalBeds']) - severeImpact['severeCasesByRequestedTime']
     }
 
     return severeImpact
