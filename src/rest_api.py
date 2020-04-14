@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request, g
 from data3 import estimator
+from data import data
 import dicttoxml
 import time
 
@@ -7,17 +8,17 @@ app = Flask(__name__)
 
 
 @app.route('/api/v1/on-covid-19', methods=['GET'])
-def index(data={}):
+def index():
     return jsonify(estimator(data))
 
 
 @app.route('/api/v1/on-covid-19/json', methods=['GET'])
-def index1(data={}):
+def index1():
     return jsonify(estimator(data))
 
 
 @app.route('/api/v1/on-covid-19/xml', methods=['GET'])
-def index2(data={}):
+def index2():
     return dicttoxml.dicttoxml(estimator(data))
 
 
