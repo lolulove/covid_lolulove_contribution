@@ -7,22 +7,22 @@ app = Flask(__name__)
 
 
 @app.route('/api/v1/on-covid-19', methods=['GET'])
-def index():
-    return jsonify(estimator(data={}))
+def index(data={}):
+    return jsonify(estimator(data))
 
 
 @app.route('/api/v1/on-covid-19/json', methods=['GET'])
-def index():
-    return jsonify(estimator(data={}))
+def index1(data={}):
+    return jsonify(estimator(data))
 
 
 @app.route('/api/v1/on-covid-19/xml', methods=['GET'])
-def index1():
-    return dicttoxml.dicttoxml(estimator(data={}))
+def index2(data={}):
+    return dicttoxml.dicttoxml(estimator(data))
 
 
 @app.route('/api/v1/on-covid-19/log', methods=['GET'])
-def index2():
+def index3():
     dispatch = ""
     with open('syslog.txt', 'r') as sys_file:
         lines = sys_file.readlines()
