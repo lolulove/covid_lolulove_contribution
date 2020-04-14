@@ -9,10 +9,10 @@ app = Flask(__name__)
 
 
 def infectionsCalcution(periodType, timeToElapse):
-    if periodType == 'months':
+    if periodType == "months":
         normalizedDays = 30 * timeToElapse
 
-    elif periodType == 'weeks':
+    elif periodType == "weeks":
         normalizedDays = 7 * timeToElapse
 
     else:
@@ -24,10 +24,10 @@ def infectionsCalcution(periodType, timeToElapse):
 
 
 def dayCalcution(periodType, timeToElapse):
-    if periodType == 'months':
+    if periodType == "months":
         normalizedDays = 30 * timeToElapse
 
-    elif periodType == 'weeks':
+    elif periodType == "weeks":
         normalizedDays = 7 * timeToElapse
 
     else:
@@ -38,31 +38,31 @@ def dayCalcution(periodType, timeToElapse):
 
 def impact_cal(data):
     impact = {
-        'currentlyInfected': data['reportedCases'] * 10
+        "currentlyInfected": data["reportedCases"] * 10
     }
 
     impact = {
-        'currentlyInfected': data['reportedCases'] * 10,
-        'infectionsByRequestedTime': impact['currentlyInfected'] * infectionsCalcution(data['periodType'],
-                                                                                       data['timeToElapse'])}
+        "currentlyInfected": data["reportedCases"] * 10,
+        "infectionsByRequestedTime": impact["currentlyInfected"] * infectionsCalcution(data["periodType"],
+                                                                                       data["timeToElapse"])}
 
     impact = {
-        'currentlyInfected': data['reportedCases'] * 10,
-        'infectionsByRequestedTime': impact['currentlyInfected'] * infectionsCalcution(data['periodType'],
-                                                                                       data['timeToElapse']),
-        'severeCasesByRequestedTime': math.floor(0.15 * impact['infectionsByRequestedTime'])
+        "currentlyInfected": data["reportedCases"] * 10,
+        "infectionsByRequestedTime": impact["currentlyInfected"] * infectionsCalcution(data["periodType"],
+                                                                                       data["timeToElapse"]),
+        "severeCasesByRequestedTime": math.floor(0.15 * impact["infectionsByRequestedTime"])
     }
 
     impact = {
-        'currentlyInfected': data['reportedCases'] * 10,
-        'infectionsByRequestedTime': impact['currentlyInfected'] * infectionsCalcution(data['periodType'],
-                                                                                       data['timeToElapse']),
-        'severeCasesByRequestedTime': math.floor(0.15 * impact['infectionsByRequestedTime']),
-        'hospitalBedsByRequestedTime': math.trunc(0.35 * data['totalHospitalBeds'] - impact['severeCasesByRequestedTime']),
-        'casesForICUByRequestedTime': math.floor(0.05 * impact['infectionsByRequestedTime']),
-        'casesForVentilatorsByRequestedTime': math.floor(0.02 * impact['infectionsByRequestedTime']),
-        'dollarsInFlight': math.trunc((impact['infectionsByRequestedTime'] * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD']) / dayCalcution(data['periodType'],
-                                                   data['timeToElapse']))
+        "currentlyInfected": data["reportedCases"] * 10,
+        "infectionsByRequestedTime": impact["currentlyInfected"] * infectionsCalcution(data["periodType"],
+                                                                                       data["timeToElapse"]),
+        "severeCasesByRequestedTime": math.floor(0.15 * impact["infectionsByRequestedTime"]),
+        "hospitalBedsByRequestedTime": math.trunc(0.35 * data["totalHospitalBeds"] - impact["severeCasesByRequestedTime"]),
+        "casesForICUByRequestedTime": math.floor(0.05 * impact["infectionsByRequestedTime"]),
+        "casesForVentilatorsByRequestedTime": math.floor(0.02 * impact["infectionsByRequestedTime"]),
+        "dollarsInFlight": math.trunc((impact["infectionsByRequestedTime"] * data["region"]["avgDailyIncomePopulation"] * data["region"]["avgDailyIncomeInUSD"]) / dayCalcution(data["periodType"],
+                                                   data["timeToElapse"]))
     }
 
     return impact
@@ -70,31 +70,31 @@ def impact_cal(data):
 
 def severeImpact_cal(data):
     severeImpact = {
-        'currentlyInfected': data['reportedCases'] * 50
+        "currentlyInfected": data["reportedCases"] * 50
     }
 
     severeImpact = {
-        'currentlyInfected': data['reportedCases'] * 50,
-        'infectionsByRequestedTime': severeImpact['currentlyInfected'] * infectionsCalcution(data['periodType'],
-                                                                                             data['timeToElapse'])}
+        "currentlyInfected": data["reportedCases"] * 50,
+        "infectionsByRequestedTime": severeImpact["currentlyInfected"] * infectionsCalcution(data["periodType"],
+                                                                                             data["timeToElapse"])}
 
     severeImpact = {
-        'currentlyInfected': data['reportedCases'] * 50,
-        'infectionsByRequestedTime': severeImpact['currentlyInfected'] * infectionsCalcution(data['periodType'],
-                                                                                             data['timeToElapse']),
-        'severeCasesByRequestedTime': math.floor(0.15 * severeImpact['infectionsByRequestedTime'])
+        "currentlyInfected": data["reportedCases"] * 50,
+        "infectionsByRequestedTime": severeImpact["currentlyInfected"] * infectionsCalcution(data["periodType"],
+                                                                                             data["timeToElapse"]),
+        "severeCasesByRequestedTime": math.floor(0.15 * severeImpact["infectionsByRequestedTime"])
     }
 
     severeImpact = {
-        'currentlyInfected': data['reportedCases'] * 50,
-        'infectionsByRequestedTime': severeImpact['currentlyInfected'] * infectionsCalcution(data['periodType'],
-                                                                                             data['timeToElapse']),
-        'severeCasesByRequestedTime': math.floor(0.15 * severeImpact['infectionsByRequestedTime']),
-        'hospitalBedsByRequestedTime': math.trunc(0.35 * data['totalHospitalBeds'] - severeImpact['severeCasesByRequestedTime']),
-        'casesForICUByRequestedTime': math.floor(0.05 * severeImpact['infectionsByRequestedTime']),
-        'casesForVentilatorsByRequestedTime': math.floor(0.02 * severeImpact['infectionsByRequestedTime']),
-        'dollarsInFlight': math.trunc((severeImpact['infectionsByRequestedTime'] * data['region']['avgDailyIncomePopulation'] * data['region']['avgDailyIncomeInUSD']) / dayCalcution(data['periodType'],
-                                                   data['timeToElapse']))
+        "currentlyInfected": data["reportedCases"] * 50,
+        "infectionsByRequestedTime": severeImpact["currentlyInfected"] * infectionsCalcution(data["periodType"],
+                                                                                             data["timeToElapse"]),
+        "severeCasesByRequestedTime": math.floor(0.15 * severeImpact["infectionsByRequestedTime"]),
+        "hospitalBedsByRequestedTime": math.trunc(0.35 * data["totalHospitalBeds"] - severeImpact["severeCasesByRequestedTime"]),
+        "casesForICUByRequestedTime": math.floor(0.05 * severeImpact["infectionsByRequestedTime"]),
+        "casesForVentilatorsByRequestedTime": math.floor(0.02 * severeImpact["infectionsByRequestedTime"]),
+        "dollarsInFlight": math.trunc((severeImpact["infectionsByRequestedTime"] * data["region"]["avgDailyIncomePopulation"] * data["region"]["avgDailyIncomeInUSD"]) / dayCalcution(data["periodType"],
+                                                   data["timeToElapse"]))
     }
 
     return severeImpact
@@ -102,31 +102,31 @@ def severeImpact_cal(data):
 
 def estimator(data):
     return {
-        'data': data,
-        'impact': impact_cal(data),
-        'severeImpact': severeImpact_cal(data)
+        "data": data,
+        "impact": impact_cal(data),
+        "severeImpact": severeImpact_cal(data)
     }
 
 
-@app.route('/api/v1/on-covid-19', methods=['GET'])
+@app.route("/api/v1/on-covid-19", methods=["GET"])
 def index():
     return jsonify(estimator(data))
 
 
-@app.route('/api/v1/on-covid-19/json', methods=['GET'])
+@app.route("/api/v1/on-covid-19/json", methods=["GET"])
 def index1():
     return jsonify(estimator(data))
 
 
-@app.route('/api/v1/on-covid-19/xml', methods=['GET'])
+@app.route("/api/v1/on-covid-19/xml", methods=["GET"])
 def index2():
     return dicttoxml.dicttoxml(estimator(data))
 
 
-@app.route('/api/v1/on-covid-19/log', methods=['GET'])
+@app.route("/api/v1/on-covid-19/log", methods=["GET"])
 def index3():
     dispatch = ""
-    with open('syslog.txt', 'r') as sys_file:
+    with open("syslog.txt", "r") as sys_file:
         lines = sys_file.readlines()
         for line in lines:
             dispatch = dispatch + line
@@ -145,10 +145,10 @@ def dactivate_timing(response):
     status = response.status_code
     method_type = request.method
     url_path = request.path
-    with open('syslog.txt', 'a') as sys_file:
+    with open("syslog.txt", "a") as sys_file:
         print("{}\t\t\t{}\t\t\t{}\t\t\t{}ms".format(method_type, url_path, status, time_elapsed), file=sys_file)
     return response
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)
