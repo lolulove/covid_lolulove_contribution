@@ -36,7 +36,7 @@ def dayCalcution(periodType, timeToElapse):
     return normalizedDays
 
 
-def impact_cal(data={}):
+def impact_cal(data):
     impact = {
         'currentlyInfected': data['reportedCases'] * 10
     }
@@ -68,7 +68,7 @@ def impact_cal(data={}):
     return impact
 
 
-def severeImpact_cal(data={}):
+def severeImpact_cal(data):
     severeImpact = {
         'currentlyInfected': data['reportedCases'] * 50
     }
