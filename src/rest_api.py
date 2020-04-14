@@ -6,13 +6,17 @@ import time
 app = Flask(__name__)
 
 
-@app.route('/api/v1/on-covid-19', methods=['POST'])
-@app.route('/api/v1/on-covid-19/json', methods=['POST'])
+@app.route('/api/v1/on-covid-19', methods=['GET'])
 def index():
     return jsonify(estimator(request.get_json()))
 
 
-@app.route('/api/v1/on-covid-19/xml', methods=['POST'])
+@app.route('/api/v1/on-covid-19/json', methods=['GET'])
+def index():
+    return jsonify(estimator(request.get_json()))
+
+
+@app.route('/api/v1/on-covid-19/xml', methods=['GET'])
 def index1():
     return dicttoxml.dicttoxml(estimator(request.get_json()))
 
