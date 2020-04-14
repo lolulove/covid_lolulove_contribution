@@ -16,17 +16,17 @@ def infectionsCalcution(periodType, timeToElapse):
     return 2 ** infectionFactor
 
 
-def dayCalcution(periodType, timeToElapse):
-    if periodType == "months":
-        normalizedDays = 30 * timeToElapse
+def dayCalcution(a, b):
+    if a == "months":
+        normalizedDay = 30 * b
 
-    elif periodType == "weeks":
-        normalizedDays = 7 * timeToElapse
+    elif a == "weeks":
+        normalizedDay = 7 * b
 
     else:
-        normalizedDays = timeToElapse
+        normalizedDay = b
 
-    return normalizedDays
+    return normalizedDay
 
 
 def impact_cal(data):
