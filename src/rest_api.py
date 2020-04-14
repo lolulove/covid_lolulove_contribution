@@ -1,49 +1,47 @@
-from flask import Flask, jsonify, request, g
-from estimator import estimator
+rom flask import Flask, jsonify, request, g
+from data3 import estimator
 import dicttoxml
-from logging import FileHandler, INFO, WARNING, DEBUG
 import time
 
 app = Flask(__name__)
 
-file_handler = FileHandler('log.txt')
-file_handler.setLevel(DEBUG)
-
-app.logger.addHandler(file_handler)
 
 @app.route('/api/v1/on-covid-19', methods=['POST'])
-def index():
-    #g.request_start_time = time.time()
-    data = request.get_json()
-    #print(data)
-    data1 = estimator(data)
-    # logging.basicConfig(filename='post_request.log')
-    # g.request_time = lambda: "%.5fs" % (time.time() - g.request_start_time)
-    # print(g.request_time())
-    return jsonify({'result': data1}), 200
-
 @app.route('/api/v1/on-covid-19/json', methods=['POST'])
-def index1():
-    #g.request_start_time = time.time()
-    data = request.get_json()
-    #print(data)
-    data1 = estimator(data)
-    # logging.basicConfig(filename='post_request.log')
-    # g.request_time = lambda: "%.5fs" % (time.time() - g.request_start_time)
-    # print(g.request_time())
-    return jsonify({'result': data1}), 200
+def index():
+    return jsonify({'result': estimator(request.get_json())})
 
 
 @app.route('/api/v1/on-covid-19/xml', methods=['POST'])
+def index1():
+    return dicttoxml.dicttoxml(estimator(request.get_json()))
+
+
+@app.route('/api/v1/on-covid-19/log', methods=['GET'])
 def index2():
-    #g.request_start_time = time.time()
-    data = request.get_json()
-    #print(data)
-    data1 = dicttoxml.dicttoxml(estimator(data))
-    # logging.basicConfig(filename='post_request.log')
-    # g.request_time = lambda: "%.5fs" % (time.time() - g.request_start_time)
-    # print(g.request_time())
-    return data1
+    dispatch = ""
+    with open('syslog.txt', 'r') as sys_file:
+        lines = sys_file.readlines()
+        for line in lines:
+            dispatch = dispatch + line
+
+    return dispatch
+
+
+@app.before_request
+def activate_timing():
+    g.start_time = time.time()
+
+
+@app.after_request
+def dactivate_timing(response):
+    time_elapsed = round(time.time() - g.start_time, 2)
+    status = response.status_code
+    method_type = request.method
+    url_path = request.path
+    with open('syslog.txt', 'a') as sys_file:
+        print("{}\t\t\t{}\t\t\t{}\t\t\t{}ms".format(method_type, url_path, status, time_elapsed), file=sys_file)
+    return response
 
 
 if __name__ == '__main__':
