@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route('/api/v1/on-covid-19', methods=['POST'])
 @app.route('/api/v1/on-covid-19/json', methods=['POST'])
 def index():
-    return jsonify({'result': estimator(request.get_json())})
+    return jsonify(estimator(request.get_json()))
 
 
 @app.route('/api/v1/on-covid-19/xml', methods=['POST'])
