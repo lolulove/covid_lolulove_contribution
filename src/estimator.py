@@ -1,12 +1,11 @@
-import math
 from flask import Flask, jsonify, request, g
-#from estimator import estimator
+from estimator import estimator
 from data import data
 import dicttoxml
 import time
+import math
 
 app = Flask(__name__)
-
 
 def infectionsCalcution(periodType, timeToElapse):
     if periodType == "months":
@@ -145,7 +144,7 @@ def dactivate_timing(response):
     status = response.status_code
     method_type = request.method
     url_path = request.path
-    with open("syslog.txt", "a") as sys_file:
+    with open('syslog.txt', 'a') as sys_file:
         print("{}\t\t\t{}\t\t\t{}\t\t\t{}ms".format(method_type, url_path, status, time_elapsed), file=sys_file)
     return response
 
