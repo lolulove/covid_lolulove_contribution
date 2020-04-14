@@ -16,15 +16,15 @@ def infectionsCalcution(periodType, timeToElapse):
     return 2 ** infectionFactor
 
 
-def dayCalcution(a, b):
-    if a == "months":
-        normalizedDay = 30 * b
+def dayCalcution(data):
+    if data["periodType"] == "months":
+        normalizedDay = data["timeToElapse"] * 30
 
-    elif a == "weeks":
-        normalizedDay = 7 * b
+    elif data["periodType"] == "weeks":
+        normalizedDay = data["timeToElapse"] * 7
 
     else:
-        normalizedDay = b
+        normalizedDay = data["timeToElapse"] * 1
 
     return normalizedDay
 
