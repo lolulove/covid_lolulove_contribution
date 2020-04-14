@@ -8,17 +8,17 @@ app = Flask(__name__)
 
 @app.route('/api/v1/on-covid-19', methods=['GET'])
 def index():
-    return jsonify(estimator(request.get_json()))
+    return jsonify(estimator(data={}))
 
 
 @app.route('/api/v1/on-covid-19/json', methods=['GET'])
 def index():
-    return jsonify(estimator(request.get_json()))
+    return jsonify(estimator(data={}))
 
 
 @app.route('/api/v1/on-covid-19/xml', methods=['GET'])
 def index1():
-    return dicttoxml.dicttoxml(estimator(request.get_json()))
+    return dicttoxml.dicttoxml(estimator(data={}))
 
 
 @app.route('/api/v1/on-covid-19/log', methods=['GET'])
