@@ -1,4 +1,4 @@
-rom flask import Flask, jsonify, request, g
+from flask import Flask, jsonify, request, g
 from data3 import estimator
 import dicttoxml
 import time
